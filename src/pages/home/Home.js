@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Grid } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -26,6 +27,8 @@ const useStyles = makeStyles({
 
 export default function Home() {
     const classes = useStyles();
+    const { id } = useParams();
+    console.log(id);
     const bull = <span className={classes.bullet}>•</span>;
 
     return (

@@ -4,6 +4,7 @@ import { Grid, withStyles } from "@material-ui/core";
 import Navigation from "./app-bar/Navigation";
 import AppContainer from "./context-containers/AppContainer";
 import UserContainer from "./context-containers/UserContainer";
+import { Container } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
@@ -18,8 +19,10 @@ function Main({ classes }) {
           <Grid item md={12}>
             <Navigation />
           </Grid>
-          <Grid className={classes.root} item lg={12}>
-            <Routes />
+          <Grid className={classes.root} container item lg={12}>
+            <Container> 
+              <Routes />
+            </Container>
           </Grid>
         </Grid>
       </AppContainer>
