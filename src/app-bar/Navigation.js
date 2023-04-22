@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,8 +6,10 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { AppContext } from "../contexts/AppContext";
-import NavigationDrawer from "./NavigationDrawer";
+import { routes } from "../config/routes";
+import { List , ListItem , ListItemIcon , ListItemText } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,33 +21,60 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         flexGrow: 1
+    },
+    routesList : {
+        display : "flex",
+    },
+    link : {
+        color : "white",
     }
 }));
 
 export default function Navigation() {
     const classes = useStyles();
-    const context = useContext(AppContext);
 
     return (
         <div className={classes.root}>
-            <NavigationDrawer />
             <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={context.toggleDrawer}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Point Of Sale System
-                    </Typography>
-                    <Button color="inherit">Login</Button>
+                <Container>
+                <Toolbar >
+                    <List component="nav" className={classes.routesList}>
+                        {routes
+                            .filter((route) => route.name)
+                            .filter((route) => !route.excludeFromNavigation)
+                            .map((route, index) => (
+                                <Link to={route.path} key={index} className={classes.link}>
+                                    <ListItem button divider className={classes.root}>
+                                        <ListItemIcon>{route.icon}</ListItemIcon>
+                                        <ListItemText primary={route.name} />
+                                    </ListItem>
+                                </Link>
+                            ))}
+                    </List>
                 </Toolbar>
+                </Container>
             </AppBar>
         </div>
     );
 }
+
+
+// navigation links yo !!!
+
+{/* <List component="nav">
+{routes
+  .filter((route) => route.name)
+  .filter((route) => {
+    if (!route.user_type) return true;
+    if (route.user_type === userContext.user.user_type) return true;
+    return false;
+  })
+  .map((route, index) => (
+    <Link to={route.path} key={index}>
+      <ListItem button divider className={classes.root}>
+        <ListItemIcon>{route.icon}</ListItemIcon>
+        <ListItemText primary={route.name} />
+      </ListItem>
+    </Link>
+  ))}
+</List> */}
